@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - ./src:/code/src:ro
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - redis
+    #   - mongo
+
+  redis:
+    image: "redis:4.0-alpine"
+    logging:
+      driver: "none"
+
+  # mongo:
+  #   image: "mongo:4.0"
+  #   logging:
+  #     driver: "none"
+
