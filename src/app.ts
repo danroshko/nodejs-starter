@@ -3,10 +3,11 @@ import parser from 'koa-body';
 import config from './config';
 import routes from './routes';
 import { connect } from './db/mongo';
+import { logger } from './middleware';
 
 const app = new Koa();
 
-app.use(parser({ urlencoded: false }));
+app.use(logger).use(parser({ urlencoded: false }));
 
 for (const route of routes) {
   app.use(route.routes()).use(route.allowedMethods());
