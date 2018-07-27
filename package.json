@@ -19,13 +19,28 @@
     "mongodb": "^3.1.1"
   },
   "devDependencies": {
+    "@types/got": "^8.3.3",
     "@types/ioredis": "^3.2.13",
+    "@types/jest": "^23.3.1",
     "@types/koa": "^2.0.46",
     "@types/koa-router": "^7.0.30",
     "@types/mongodb": "^3.1.2",
+    "got": "^8.3.2",
     "jest": "^23.4.1",
+    "ts-jest": "^23.0.1",
     "tslint": "^5.11.0",
     "typescript": "^2.9.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "test\\.(js|ts)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
   },
   "license": "MIT"
 }
