@@ -1,5 +1,6 @@
 import Router from 'koa-router';
 import redis from '../db/redis';
+import { test } from '../db/mongo';
 
 const router = new Router({ prefix: '/health' });
 
@@ -10,6 +11,11 @@ router.get('/app', async ctx => {
 router.get('/redis', async ctx => {
   await redis.get('test:health');
   ctx.body = { result: 'Redis works' };
+});
+
+router.get('/mongo', async ctx => {
+  await test.find({});
+  ctx.body = { result: 'MongoDB works' };
 });
 
 export default router;

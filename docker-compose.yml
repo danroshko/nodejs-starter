@@ -13,15 +13,15 @@ services:
       - NODE_ENV=development
     depends_on:
       - redis
-    #   - mongo
+      - mongo
 
   redis:
     image: "redis:4.0-alpine"
     logging:
       driver: "none"
 
-  # mongo:
-  #   image: "mongo:4.0"
-  #   logging:
-  #     driver: "none"
+  mongo:
+    image: "mongo:4.0"
+    logging:
+      driver: "none"
 
