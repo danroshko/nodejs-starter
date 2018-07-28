@@ -1,0 +1,26 @@
+sudo: required
+
+language: node_js
+
+node_js:
+  - "8"
+  - "9"
+  - "10"
+
+services:
+  - docker
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - docker-compose up -d
+
+install:
+  - npm install
+
+script:
+  - sleep 5
+  - npm run lint
+  - npm test

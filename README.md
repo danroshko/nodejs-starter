@@ -1,5 +1,7 @@
 # Node.js API starter
 
+[![Build Status](https://travis-ci.org/danroshko/nodejs-starter.svg?branch=master)](https://travis-ci.org/danroshko/nodejs-starter)
+
 A starter template for Node.js projects. Similar to [TypeScript Node Starter](https://github.com/Microsoft/TypeScript-Node-Starter) and [Node.js API Starter Kit](https://github.com/kriasoft/nodejs-api-starter), but more minimal and with slightly different technology stack:
 
 - **Typescript**
