@@ -1,5 +1,5 @@
 {
-  "name": "node-starter",
+  "name": "nodejs-starter",
   "version": "0.1.0",
   "private": true,
   "description": "Node.js API starter kit",
@@ -10,6 +10,9 @@
     "build": "tsc",
     "test": "jest",
     "lint": "tslint -p tsconfig.json"
+  },
+  "engines": {
+    "node": "^8.11"
   },
   "dependencies": {
     "ioredis": "^3.2.2",
