@@ -2,9 +2,11 @@ import development from './dev';
 import production from './prod';
 
 interface IConfig {
+  production: boolean;
   port: number;
   redisURI: string;
   mongoURI: string;
+  allowedOrigins: string[];
 }
 
 let config: IConfig;

@@ -43,16 +43,6 @@ describe('error status codes', () => {
     }
   });
 
-  test('405', async () => {
-    expect.assertions(1);
-
-    try {
-      await got.post(BASE + 'app', { json: true, body: { text: 'hello' } });
-    } catch (error) {
-      expect(error.response.statusCode).toEqual(405);
-    }
-  });
-
   test('400', async () => {
     expect.assertions(2);
 
@@ -62,5 +52,38 @@ describe('error status codes', () => {
       expect(error.response.statusCode).toEqual(400);
       expect(error.response.body).toEqual('Expecting number');
     }
+  });
+});
+
+describe('cors', () => {
+  const url = BASE + 'app';
+
+  test('requests from unlisted origins are blocked', async () => {
+    expect.assertions(2);
+
+    try {
+      await got.get(url, { headers: { Origin: 'http://foo.com' } });
+    } catch (error) {
+      expect(error.response.statusCode).toEqual(403);
+      expect(error.response.body).toEqual('Origin is not allowed');
+    }
+  });
+
+  test('requests from listed origins are allowed', async () => {
+    const r = await got.get(url, { headers: { Origin: 'http://localhost:4200' } });
+
+    expect(r.statusCode).toEqual(200);
+    expect(r.headers['access-control-allow-origin']).toEqual('http://localhost:4200');
+    expect(r.headers['access-control-allow-methods']).toEqual('GET,HEAD,POST,PATCH,PUT,DELETE');
+    expect(r.headers['access-control-allow-credentials']).toEqual('true');
+  });
+
+  test('responds to a HEAD request', async () => {
+    const r = await got.head(url, { headers: { Origin: 'http://localhost:4200' } });
+
+    expect(r.statusCode).toEqual(200);
+    expect(r.headers['access-control-allow-origin']).toEqual('http://localhost:4200');
+    expect(r.headers['access-control-allow-methods']).toEqual('GET,HEAD,POST,PATCH,PUT,DELETE');
+    expect(r.headers['access-control-allow-credentials']).toEqual('true');
   });
 });
