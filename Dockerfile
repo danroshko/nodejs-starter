@@ -1,4 +1,4 @@
-FROM node:10.7 as base
+FROM node:10.13.0 as base
 
 COPY . /code
 WORKDIR /code
