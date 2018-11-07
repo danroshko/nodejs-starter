@@ -7,7 +7,6 @@ services:
       target: dev
     volumes:
       - ./src:/code/src:ro
-      - ./package.json:/code/package.json:ro
     ports:
       - '3000:3000'
     environment:

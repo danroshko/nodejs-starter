@@ -8,7 +8,7 @@
     "start": "sudo docker-compose up -d && sudo docker-compose logs -f",
     "stop": "sudo docker-compose down -v",
     "build": "tsc",
-    "watch": "tsc -w & nodemon dist/app.js",
+    "watch": "concurrently \"tsc -w\" \"nodemon dist/app.js\"",
     "test": "jest",
     "lint": "tslint -p tsconfig.json"
   },
@@ -31,6 +31,7 @@
     "@types/koa-router": "^7.0.33",
     "@types/mongodb": "^3.1.14",
     "@types/pg": "^7.4.11",
+    "concurrently": "^4.0.1",
     "got": "^9.3.1",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.4",
