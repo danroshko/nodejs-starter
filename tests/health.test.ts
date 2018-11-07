@@ -24,6 +24,13 @@ describe('health routes', () => {
     expect(r.body).toEqual({ result: 'MongoDB works' });
   });
 
+  test('postgres route', async () => {
+    const r = await got.get(BASE + 'postgres', { json: true });
+
+    expect(r.statusCode).toEqual(200);
+    expect(r.body).toEqual({ result: [] });
+  });
+
   test('post route', async () => {
     const r = await got.post(BASE + 'body', { json: true, body: { n: 42 } });
 

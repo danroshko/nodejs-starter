@@ -6,8 +6,8 @@ A starter template for Node.js projects. Similar to [TypeScript Node Starter](ht
 
 - **Typescript**
 - **koa** (with koa-router and koa-body)
-- **MongoDB** and **Redis**
 - Testing with **Jest**
+- **PostgreSQL**, **MongoDB** and **Redis**
 
 ## Prerequisites
 

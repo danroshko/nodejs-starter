@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import redis from '../db/redis';
 import { test } from '../db/mongo';
+import * as postgres from '../db/postgres';
 
 const router = new Router({ prefix: '/health' });
 
@@ -16,6 +17,11 @@ router.get('/redis', async ctx => {
 router.get('/mongo', async ctx => {
   await test.find({});
   ctx.body = { result: 'MongoDB works' };
+});
+
+router.get('/postgres', async ctx => {
+  const { rows } = await postgres.query('SELECT * FROM test');
+  ctx.body = { result: rows };
 });
 
 router.post('/body', async ctx => {

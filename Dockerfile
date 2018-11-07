@@ -2,14 +2,14 @@ FROM node:10.13.0 as base
 
 COPY . /code
 WORKDIR /code
-RUN npm install -q && npm install -g pm2
+RUN npm install -q
 
 FROM base as dev
 ENV NODE_ENV=development
-RUN pm2 install typescript
-CMD [ "pm2-runtime", "start", "--watch", "src/app.ts" ]
+RUN npm i -g nodemon
+CMD [ "npm", "run", "watch" ]
 
 FROM base as prod
 ENV NODE_ENV=production
-RUN npm run build
+RUN npm install -g pm2 && npm run build
 CMD [ "pm2-runtime", "start", "dist/app.js" ]
