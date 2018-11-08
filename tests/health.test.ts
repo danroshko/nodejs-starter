@@ -1,38 +1,43 @@
 import got from 'got';
 
-const BASE = 'http://127.0.0.1:3000/health/';
+type Got = got.GotFn & Record<'get' | 'post' | 'put' | 'patch' | 'head' | 'delete', got.GotFn>;
+
+const client: Got = (got as any).extend({
+  baseUrl: 'http://127.0.0.1:3000/health/',
+  json: true,
+});
 
 describe('health routes', () => {
   test('app route', async () => {
-    const r = await got.get(BASE + 'app', { json: true });
+    const r = await client.get('app');
 
     expect(r.statusCode).toEqual(200);
     expect(r.body).toEqual({ result: 'App works' });
   });
 
   test('redis route', async () => {
-    const r = await got.get(BASE + 'redis', { json: true });
+    const r = await client.get('redis');
 
     expect(r.statusCode).toEqual(200);
     expect(r.body).toEqual({ result: 'Redis works' });
   });
 
   test('mongo route', async () => {
-    const r = await got.get(BASE + 'mongo', { json: true });
+    const r = await client.get('mongo');
 
     expect(r.statusCode).toEqual(200);
     expect(r.body).toEqual({ result: 'MongoDB works' });
   });
 
   test('postgres route', async () => {
-    const r = await got.get(BASE + 'postgres', { json: true });
+    const r = await client.get('postgres');
 
     expect(r.statusCode).toEqual(200);
     expect(r.body).toEqual({ result: [] });
   });
 
   test('post route', async () => {
-    const r = await got.post(BASE + 'body', { json: true, body: { n: 42 } });
+    const r = await client.post('body', { json: true, body: { n: 42 } });
 
     expect(r.statusCode).toEqual(201);
     expect(r.body).toEqual({ result: 'Body parser works' });
@@ -44,7 +49,7 @@ describe('error status codes', () => {
     expect.assertions(1);
 
     try {
-      await got.get(BASE + 'asdfgh');
+      await client.get('asdfgh');
     } catch (error) {
       expect(error.response.statusCode).toEqual(404);
     }
@@ -54,7 +59,7 @@ describe('error status codes', () => {
     expect.assertions(2);
 
     try {
-      await got.post(BASE + 'body', { json: true, body: { n: '42' } });
+      await client.post('body', { json: true, body: { n: '42' } });
     } catch (error) {
       expect(error.response.statusCode).toEqual(400);
       expect(error.response.body).toEqual('Expecting number');
@@ -63,13 +68,11 @@ describe('error status codes', () => {
 });
 
 describe('cors', () => {
-  const url = BASE + 'app';
-
   test('requests from unlisted origins are blocked', async () => {
     expect.assertions(2);
 
     try {
-      await got.get(url, { headers: { Origin: 'http://foo.com' } });
+      await client.get('app', { headers: { Origin: 'http://foo.com' } });
     } catch (error) {
       expect(error.response.statusCode).toEqual(403);
       expect(error.response.body).toEqual('Origin is not allowed');
@@ -77,7 +80,7 @@ describe('cors', () => {
   });
 
   test('requests from listed origins are allowed', async () => {
-    const r = await got.get(url, { headers: { Origin: 'http://localhost:4200' } });
+    const r = await client.get('app', { headers: { Origin: 'http://localhost:4200' } });
 
     expect(r.statusCode).toEqual(200);
     expect(r.headers['access-control-allow-origin']).toEqual('http://localhost:4200');
@@ -86,7 +89,7 @@ describe('cors', () => {
   });
 
   test('responds to a HEAD request', async () => {
-    const r = await got.head(url, { headers: { Origin: 'http://localhost:4200' } });
+    const r = await client.head('app', { headers: { Origin: 'http://localhost:4200' } });
 
     expect(r.statusCode).toEqual(200);
     expect(r.headers['access-control-allow-origin']).toEqual('http://localhost:4200');
