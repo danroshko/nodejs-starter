@@ -5,8 +5,8 @@
   "description": "Node.js API starter kit",
   "main": "src/app.js",
   "scripts": {
-    "start": "sudo docker-compose up -d && sudo docker-compose logs -f",
-    "stop": "sudo docker-compose down -v",
+    "start": "docker-compose up -d && docker-compose logs -f",
+    "stop": "docker-compose down -v",
     "build": "tsc",
     "watch": "concurrently \"tsc -w\" \"nodemon dist/app.js\"",
     "test": "jest",
@@ -16,7 +16,7 @@
     "node": "^8.11"
   },
   "dependencies": {
-    "ioredis": "^4.2.0",
+    "ioredis": "^4.11.2",
     "koa": "^2.6.1",
     "koa-body": "^4.0.4",
     "koa-router": "^7.4.0",
@@ -24,19 +24,19 @@
     "pg": "^7.6.1"
   },
   "devDependencies": {
-    "@types/got": "^9.2.0",
-    "@types/ioredis": "^4.0.4",
-    "@types/jest": "^24.0.13",
-    "@types/koa": "^2.0.46",
-    "@types/koa-router": "^7.0.33",
+    "@types/got": "^9.6.1",
+    "@types/ioredis": "^4.0.13",
+    "@types/jest": "^24.0.15",
+    "@types/koa": "^2.0.49",
+    "@types/koa-router": "^7.0.42",
     "@types/mongodb": "^3.1.14",
     "@types/pg": "^7.4.11",
     "concurrently": "^4.0.1",
     "got": "^9.3.1",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.11.0",
-    "typescript": "^3.5.1"
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
   },
   "jest": {
     "testEnvironment": "node",
